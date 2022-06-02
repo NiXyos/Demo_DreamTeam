@@ -28,7 +28,7 @@ namespace dreamteam_mvc.Controllers
             return View();
         }
 
-        public IActionResult Connexion()
+        public IActionResult Authentification()
         {
             return View();
         }
