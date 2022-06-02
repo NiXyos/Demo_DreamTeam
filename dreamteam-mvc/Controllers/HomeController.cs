@@ -18,7 +18,7 @@ namespace dreamteam_mvc.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index() 
         {
             return View();
         }
