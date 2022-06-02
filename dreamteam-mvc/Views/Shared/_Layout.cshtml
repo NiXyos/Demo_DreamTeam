@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Jia Ming Ma">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    <title>Valorant Agents Sheet</title>
+    
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/2bf095b9ea.js" crossorigin="anonymous"></script>
+    <!-- JQuery CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom css/js for this template -->
+    <link href="css/custom_css.css" rel="stylesheet">
+    <script src="js/custom_js.js"></script>
+  </head>
+<body class="mt-5 py-5 bg-img bg-dark">
+    <header>
+        <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="btn-lg btn-outline-dark bg-dark border-2" data-toggle="tooltip" data-placement="bottom" title="Home Page" href=''>
+                        <span class="navbar-toggler-icon"></span>
+                    </a>
+                </li>
+                <li class="nav-item ml-4">
+                    <button type="button" id="btn-github" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="GitHub Front" href='https://github.com/NiXyos/Demo_DreamTeam'>
+                        <i class="fab fa-github fa-lg"></i>
+                    </button>
+                </li>
+
+                <li class="nav-item ml-4">
+                    <button type="button" id="btn-github" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="GitHub Back" href='https://github.com/K1nkku/API_DreamTeam'>
+                        <i class="fab fa-github fa-lg"></i>
+                    </button>
+                </li>
+
+                <li class="nav-item ml-4">
+                    <button type="button" class="btn btn-danger btn-circle" data-toggle="popover" title="Bonjour !" data-placement="bottom" data-content="Si vous avez des suggestions pour le site web, faites-le nous savoir. Bon séjour ! 😃">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="container text-center">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - dreamteam_mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
