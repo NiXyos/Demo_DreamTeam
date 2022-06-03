@@ -18,18 +18,59 @@ namespace dreamteam_mvc.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index() 
+        public IActionResult Personnage(int id)
         {
+            List<PersonnageModel> lst = new PersonnageModel().GetListePersonnages();
+            List<AbilityModel> lstmap = new AbilityModel().GetListeAbilitys();
+            foreach (PersonnageModel personnage in lst)
+            {
+                if (personnage.Id == id)
+                {
+                    ViewBag.Perso = personnage;
+                }
+            }
             return View();
         }
 
-        public IActionResult Personnage()
+        public IActionResult Index()
         {
+            List<PersonnageModel> lstperso = new PersonnageModel().GetListePersonnages();
+            List<MapModel> lstmap = new MapModel().GetListeMaps();
+            List<WeaponModel> lstweapon = new WeaponModel().GetListeWeapons();
+            ViewBag.Persos = lstperso;
+            ViewBag.Maps = lstmap;
+            ViewBag.Weapons = lstweapon;
             return View();
         }
 
         public IActionResult Authentification()
         {
+            return View();
+        }
+
+        public IActionResult Map(int id)
+        {
+            List<MapModel> lst = new MapModel().GetListeMaps();
+            foreach (MapModel map in lst)
+            {
+                if (map.Id == id)
+                {
+                    ViewBag.Map = map;
+                }
+            }
+            return View();
+        }
+
+        public IActionResult Weapon(int id)
+        {
+            List<WeaponModel> lst = new WeaponModel().GetListeWeapons();
+            foreach (WeaponModel weapon in lst)
+            {
+                if (weapon.Id == id)
+                {
+                    ViewBag.Weapon = weapon;
+                }
+            }
             return View();
         }
 

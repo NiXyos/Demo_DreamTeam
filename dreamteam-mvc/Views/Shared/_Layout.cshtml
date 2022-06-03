@@ -23,10 +23,11 @@
     <header>
         <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="btn-lg btn-outline-dark bg-dark border-2" data-toggle="tooltip" data-placement="bottom" title="Home Page" href=''>
-                        <span class="navbar-toggler-icon"></span>
-                    </a>
+
+                <li class="nav-item ml-4">
+                    <button type="button" id="btn-github" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="GitHub Front" href='https://github.com/NiXyos/Demo_DreamTeam'>
+                        <i class="fa fa-solid fa-map"></i>
+                    </button>
                 </li>
                 <li class="nav-item ml-4">
                     <button type="button" id="btn-github" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="GitHub Front" href='https://github.com/NiXyos/Demo_DreamTeam'>
@@ -41,15 +42,15 @@
                 </li>
 
                 <li class="nav-item ml-4">
-                    <button type="button" class="btn btn-danger btn-circle" data-toggle="popover" title="Bonjour !" data-placement="bottom" data-content="Si vous avez des suggestions pour le site web, faites-le nous savoir. Bon séjour ! 😃">
-                        <i class="fas fa-heart"></i>
+                    <button type="button" id="btn-github" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="API" href=''>
+                        <i class="fa fa-solid fa-book"></i>
                     </button>
                 </li>
 
 
                 <li class="nav-item ml-4">
-                    <button type="button" class="btn btn-danger btn-circle1" data-toggle="popover" data-placement="bottom">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Authentification">Connexion</a>
+                    <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom">
+                        <a class="text-dark" asp-controller="Home" asp-action="Authentification">Connexion</a>
                     </button>
                 </li>
             </ul>
@@ -63,7 +64,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - dreamteam_mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - dreamteam_mvc - Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
