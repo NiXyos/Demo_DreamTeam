@@ -94,7 +94,7 @@ html, body {
 }
 
 .bg-img {
-  background-image: url(agents/background.png);
+  background-image: url(../agents/background.png);
   background-repeat: no-repeat;
   width: auto;
   height: 100%;

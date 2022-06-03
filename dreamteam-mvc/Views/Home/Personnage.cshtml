@@ -7,7 +7,7 @@
 <div class="row justify-content-around text-light">
 	<div class="col-lg-4">
 		<div class="card border border-breach bg-darkest mb-4 shadow-lg">
-			<img src="@ViewBag.Perso.PicUrl" class="card-img-top" alt=""> <!-- agents/breach_m.png -->
+			<img src="../../@ViewBag.Perso.PicUrl" class="card-img-top" alt=""> <!-- agents/breach_m.png -->
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item bg-darkest">
 					<div class="row">
@@ -56,7 +56,7 @@
 								<button id="a1-btn" type="button" class="btn btn-dark btn-zoom mb-3 mx-3 shadow"><img height="64px" src=""></button> <!-- agents/breach_1.png -->
 								<button id="a2-btn" type="button" class="btn btn-dark btn-zoom mb-3 mx-3 shadow"><img height="64px" src=""></button> <!-- agents/breach_2.png -->
 								<button id="a3-btn" type="button" class="btn btn-dark btn-zoom mb-3 mx-3 shadow"><img height="64px" src=""></button> <!-- agents/breach_3.png -->
-								<button id="a4-btn" type="button" class="btn btn-dark btn-zoom mb-3 mx-3 shadow"><img height="64px" src=""></button> <!-- agents/breach_4.png -->
+								<button id="a4-btn" type="button" class="btn btn-dark btn-zoom mb-3 mx-3 shadow"><img height="64px" src="../../@ViewBag.Perso.Ult.IconUrl"></button> <!-- agents/breach_4.png -->
 							</div>
 							<div id="a1" class="no-display">
 								@*@foreach (var ability in @ViewBag.Perso.Abilities)
@@ -75,8 +75,7 @@
 									<div class="embed-responsive embed-responsive-16by9">
 										<video id="a4-v" class="embed-responsive-item" autoplay loop muted><source src="" type="video/mp4" /></video> <!-- agents/breach_3_v.mp4 -->
 									</div>
-								   }*@
-								
+								   }*@						
 							</div>
 							<div id="a4" class="no-display">  
 									<h3 class="text-breach shadow-title"> <strong>@ViewBag.Perso.Ult.Name</strong> </h3>
