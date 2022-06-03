@@ -35,6 +35,11 @@ namespace dreamteam_mvc.Controllers
         public IActionResult Index()
         {
             List<PersonnageModel> lstperso = new PersonnageModel().GetListePersonnages();
+            if (lstperso.Count < 1)
+            {
+                return View();
+            }
+
             List<MapModel> lstmap = new MapModel().GetListeMaps();
             List<WeaponModel> lstweapon = new WeaponModel().GetListeWeapons();
             ViewBag.Persos = lstperso;

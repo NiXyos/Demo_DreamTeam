@@ -11,7 +11,7 @@ namespace dreamteam_mvc.Models
         public string Cost { get; set; }
         public string Description { get; set; }
         public int DomagesId { get; set; }
-        public int WeaponUrl { get; set; }
+        public string WeaponUrl { get; set; }
         public List<WeaponModel> GetListeWeapons()
         {
             string weaponstr = ApiConnector.GetWeapon().Result.ToString();

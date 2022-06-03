@@ -11,13 +11,24 @@ namespace dreamteam_mvc.Models
         public string Role { get; set; }
         public string Description { get; set; }
         public int Ultld { get; set; }
+        //public AbilityModel[] Abilities { get; set; }
+        public UltimateModel Ult { get; set; }
         public string PicUrl { get; set; }
 
         public List<PersonnageModel> GetListePersonnages() 
-        { 
-            string persostr = ApiConnector.GetPersonnage().Result.ToString();
-            List<PersonnageModel> perso = JsonConvert.DeserializeObject<List<PersonnageModel>>(persostr) as List<PersonnageModel>;
-            return perso;
+        {
+            try
+            {
+                string persostr = ApiConnector.GetPersonnage().Result.ToString();
+                List<PersonnageModel> perso = JsonConvert.DeserializeObject<List<PersonnageModel>>(persostr) as List<PersonnageModel>;
+                return perso;
+            }
+            catch (System.Exception)
+            {
+
+                return new List<PersonnageModel>();
+            }
+            
         }
     }
 

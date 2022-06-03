@@ -18,9 +18,13 @@ namespace dreamteam_mvc
 
             string url = @"https://apivalorant.azurewebsites.net/api/characters";
             var response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsStringAsync().Result;
+            }
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            return response.Content.ReadAsStringAsync().Result;
-            
+
+            throw new Exception("Aucune donnée n'a été retrouvé !!!");
         }
         public static async Task<string> GetWeapon()
         {
@@ -35,7 +39,6 @@ namespace dreamteam_mvc
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsStringAsync().Result;
-
         }
 
         public static async Task<string> GetMap()
@@ -51,7 +54,6 @@ namespace dreamteam_mvc
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsStringAsync().Result;
-
         }
 
         public static async Task<string> GetAbility()
@@ -64,6 +66,21 @@ namespace dreamteam_mvc
             };
 
             string url = @"https://apivalorant.azurewebsites.net/api/abilitys";
+            var response = await client.GetAsync(url);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            return response.Content.ReadAsStringAsync().Result;
+        }
+
+        public static async Task<string> GetUltimate()
+        {
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
+            {
+                { "username", "myUser" },
+                { "password", "myPassword" }
+            };
+
+            string url = @"https://apivalorant.azurewebsites.net/api/ultimates";
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsStringAsync().Result;
