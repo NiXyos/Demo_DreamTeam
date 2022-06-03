@@ -12,10 +12,12 @@ namespace dreamteam_mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AuthentificationModel _authentificationModel;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AuthentificationModel authentificationModel)
         {
             _logger = logger;
+            _authentificationModel = authentificationModel;
         }
 
         public IActionResult Personnage(int id)
@@ -50,6 +52,13 @@ namespace dreamteam_mvc.Controllers
 
         public IActionResult Authentification()
         {
+            //AuthentificationModel.
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+
             return View();
         }
 
