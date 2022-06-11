@@ -1,4 +1,5 @@
 ﻿using dreamteam_mvc.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -34,7 +35,8 @@ namespace dreamteam_mvc.Controllers
             return View();
         }
 
-        public IActionResult Index()
+        
+            public IActionResult Index()
         {
             List<PersonnageModel> lstperso = new PersonnageModel().GetListePersonnages();
             if (lstperso.Count < 1)
@@ -52,15 +54,24 @@ namespace dreamteam_mvc.Controllers
 
         public IActionResult Authentification()
         {
-            //AuthentificationModel.
-
+            
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string UserName, string Password)
         {
-
-            return View();
+            var token = ApiConnector.Login(UserName, Password);
+            if (token.Result != null)
+            {
+                HttpContext.Session.SetString("token", token.Result);
+                Index();
+                return View("Index");
+            }
+            else
+            {
+                Console.WriteLine("User not found");
+                return View("Authentification");
+            }
         }
 
         public IActionResult Map(int id)
