@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -7,7 +8,7 @@
     <meta name="author" content="Jia Ming Ma">
     <link rel="shortcut icon" type="image/png" href="favicon.png">
     <title>Valorant Agents Sheet</title>
-    
+
     <!-- Icons -->
     <script src="https://kit.fontawesome.com/2bf095b9ea.js" crossorigin="anonymous"></script>
     <!-- JQuery CDN-->
@@ -17,8 +18,8 @@
     <link href="~/assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom css/js for this template -->
     <link href="~/css/custom_css.css" rel="stylesheet">
-    
-  </head>
+
+</head>
 <body class="mt-5 py-5 bg-img bg-dark">
     <header>
         <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
@@ -50,7 +51,15 @@
 
                 <li class="nav-item ml-4">
                     <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom">
-                        <a class="text-dark" asp-controller="Home" asp-action="Authentification">Connexion</a>
+                        @if (ViewBag.Connecte == true)
+                        {
+                            <a class="text-dark" asp-controller="Home" asp-action="Deconnexion">Deconnexion</a>
+                        }
+                        else
+                        {
+                            <a class="text-dark" asp-controller="Home" asp-action="Authentification">Connexion</a>
+
+                        }
                     </button>
                 </li>
             </ul>

@@ -32,12 +32,14 @@ namespace dreamteam_mvc.Controllers
                     ViewBag.Perso = personnage;
                 }
             }
+            isConnected();
             return View();
         }
 
         
             public IActionResult Index()
         {
+            ViewBag.Connecte = false;
             List<PersonnageModel> lstperso = new PersonnageModel().GetListePersonnages();
             if (lstperso.Count < 1)
             {
@@ -49,13 +51,22 @@ namespace dreamteam_mvc.Controllers
             ViewBag.Persos = lstperso;
             ViewBag.Maps = lstmap;
             ViewBag.Weapons = lstweapon;
+            isConnected();
             return View();
         }
 
         public IActionResult Authentification()
         {
-            
+            isConnected();
             return View();
+        }
+
+        public IActionResult Deconnexion()
+        {
+            Index();
+            HttpContext.Session.Remove("token");
+            isConnected();
+            return View("Index");
         }
 
         public IActionResult Login(string UserName, string Password)
@@ -65,11 +76,13 @@ namespace dreamteam_mvc.Controllers
             {
                 HttpContext.Session.SetString("token", token.Result);
                 Index();
+                isConnected();
                 return View("Index");
             }
             else
             {
                 Console.WriteLine("User not found");
+                isConnected();
                 return View("Authentification");
             }
         }
@@ -84,6 +97,7 @@ namespace dreamteam_mvc.Controllers
                     ViewBag.Map = map;
                 }
             }
+            isConnected();
             return View();
         }
 
@@ -97,7 +111,20 @@ namespace dreamteam_mvc.Controllers
                     ViewBag.Weapon = weapon;
                 }
             }
+            isConnected();
             return View();
+        }
+
+        public void isConnected()
+        {
+            if (!String.IsNullOrWhiteSpace(HttpContext.Session.GetString("token")))
+            {
+                ViewBag.Connecte = true;
+            }
+            else
+            {
+                ViewBag.Connecte = false;
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
