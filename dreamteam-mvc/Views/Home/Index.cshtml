@@ -24,19 +24,24 @@
           <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Maps</button>
     </div>
   </div>
-    <div class="container mt-2 pt-3 px-5 ">
-    <div class="row justify-content-around pb-5 px-5">
-        @foreach (var map in ViewBag.Maps)
-       {
-           <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded initiator">
-                <a asp-controller="Home" asp-action="Map" asp-route-id="@map.Id"> <img class="" width="150px" height="100px"  src="@map.MapUrl" alt="@map.Name"> </a>
-           </div>
-       }
-     </div>
-     <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Armes</button>
-    </div>
+  <div class="container mt-2 pt-3 px-5 ">
+      <div class="row justify-content-around pb-5 px-5">
+          @foreach (var map in ViewBag.Maps)
+          {
+          <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded initiator">
+              <a asp-controller="Home" asp-action="Map" asp-route-id="@map.Id"> <img class="" width="150px" height="100px" src="@map.MapUrl" alt="@map.Name"> </a>
+              <a asp-controller="Home" asp-action="DeleteMap" asp-route-id="@map.Id"> Supprimer </a>
+          </div>
+          }
+
+      </div>
+      <a asp-controller="Home" asp-action="AddMap"> Ajouter map </a>
   </div>
+
+      <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Armes</button>
+      </div>
+  
     <div class="container mt-2 pt-3 px-5 ">
      <div class="row justify-content-around pb-5 px-5">
         @foreach (var weapon in ViewBag.Weapons)

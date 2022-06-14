@@ -13,12 +13,11 @@ namespace dreamteam_mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AuthentificationModel _authentificationModel;
 
-        public HomeController(ILogger<HomeController> logger, AuthentificationModel authentificationModel)
+
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _authentificationModel = authentificationModel;
         }
 
         public IActionResult Personnage(int id)
@@ -85,6 +84,27 @@ namespace dreamteam_mvc.Controllers
                 isConnected();
                 return View("Authentification");
             }
+        }
+
+        public IActionResult AddMap()
+        {
+            isConnected();
+            return View();
+        }
+        public IActionResult AjoutMap(string Name, string Place, string MapUrl)
+        {
+            ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
+            Index();
+            isConnected();
+            return View("Index");
+        }
+
+        public IActionResult DeleteMap(int Id)
+        {
+            ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
+            Index();
+            isConnected();
+            return View("Index");
         }
 
         public IActionResult Map(int id)

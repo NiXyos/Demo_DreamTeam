@@ -25,7 +25,6 @@ namespace dreamteam_mvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddTransient<AuthentificationModel>();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(60); //TimeSpan.FromSeconds(10);
