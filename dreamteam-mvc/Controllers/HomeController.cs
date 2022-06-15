@@ -51,7 +51,7 @@ namespace dreamteam_mvc.Controllers
             ViewBag.Maps = lstmap;
             ViewBag.Weapons = lstweapon;
             isConnected();
-            return View();
+            return View("Index");
         }
 
         public IActionResult Authentification()
@@ -93,15 +93,24 @@ namespace dreamteam_mvc.Controllers
         }
         public IActionResult AjoutMap(string Name, string Place, string MapUrl)
         {
-            ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
+            var test = ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
             Index();
             isConnected();
             return View("Index");
         }
 
+        public IActionResult ModifMap(int Id)
+        {
+            var map = ApiConnector.GetAMap(Id);
+            //var test = ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
+            //Index();
+            isConnected();
+            return View("AddMap");
+        }
+
         public IActionResult DeleteMap(int Id)
         {
-            ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
+            var test = ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
             Index();
             isConnected();
             return View("Index");

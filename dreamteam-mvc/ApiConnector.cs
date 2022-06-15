@@ -160,6 +160,17 @@ namespace dreamteam_mvc
             }
         }
 
+        public static async Task<string> GetAMap(int Id)
+        {
+            HttpClient client = new HttpClient();
+            
+
+            string url = @"https://apivalorant.azurewebsites.net/api/maps/" + Id;
+            var response = await client.GetAsync(url);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            return response.Content.ReadAsStringAsync().Result;
+        }
+
 
     }
 }
