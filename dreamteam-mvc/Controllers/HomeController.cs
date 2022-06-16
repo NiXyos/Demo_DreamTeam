@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -51,7 +52,7 @@ namespace dreamteam_mvc.Controllers
             ViewBag.Maps = lstmap;
             ViewBag.Weapons = lstweapon;
             isConnected();
-            return View("Index");
+            return View();
         }
 
         public IActionResult Authentification()
@@ -102,10 +103,27 @@ namespace dreamteam_mvc.Controllers
         public IActionResult ModifMap(int Id)
         {
             var map = ApiConnector.GetAMap(Id);
+            Console.WriteLine(map);
             //var test = ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
             //Index();
             isConnected();
+            if (map.Result != null)
+            {
+                ViewBag.Modif = true;
+                MapModel uneMap = JsonConvert.DeserializeObject<MapModel>(map.Result);
+                ViewBag.Name = uneMap.Name;
+                ViewBag.Place = uneMap.Place;
+                ViewBag.MapUrl = uneMap.MapUrl;
+            }
             return View("AddMap");
+        }
+
+        public IActionResult PutMap(string Id ,string Name, string Place, string MapUrl)
+        {
+            var test = ApiConnector.PutMap(Id,Name, Place, MapUrl, HttpContext.Session.GetString("token"));
+            Index();
+            isConnected();
+            return View("Index");
         }
 
         public IActionResult DeleteMap(int Id)

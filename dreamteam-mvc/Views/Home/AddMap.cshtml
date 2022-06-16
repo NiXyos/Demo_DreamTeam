@@ -1,14 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "Ajout map";
-
     var Name = "";
     var Place = "";
     var MapUrl = "";
+    var Id = 0;
+    var Test = "";
+    if (ViewBag.MoDif == true)
+    {
+        ViewData["Title"] = "Modif map";
+        Name = ViewBag.Name;
+        Place = ViewBag.Place;
+        MapUrl = ViewBag.MapUrl;
+        Id = ViewBag.Id;
+    }
+    else
+    {
+        ViewData["Title"] = "Ajout map";
+    }
+
+
 }
 <h1 style="color: white;">@ViewData["Title"]</h1>
 
-<form asp-controller="Home" asp-action="AjoutMap" method="post">
+@if (ViewBag.MoDif == true)
+{
+    Test = "PutMap";
+}
+else
+{
+    Test = "AjoutMap";
+}
+<form asp-controller="Home" asp-action="@Test" method="post">
     <div>
+        <input type="hidden" asp-for="@Id" />
         <h3 style="color: white;">Nom de la map :</h3>
         <input asp-for="@Name" />
         <h3 style="color: white;">Pays :</h3>

@@ -168,7 +168,42 @@ namespace dreamteam_mvc
             string url = @"https://apivalorant.azurewebsites.net/api/maps/" + Id;
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            return response.Content.ReadAsStringAsync().Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var map = response.Content.ReadAsStringAsync().Result;
+                return map;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static async Task<string> PutMap(string Id,string Name, string Place, string MapUrl, string token)
+        {
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
+            {
+                { "id" , Id },
+                { "name", Name },
+                { "place", Place },
+                { "mapUrl", MapUrl }
+            };
+            string url = @"https://apivalorant.azurewebsites.net/api/maps";
+            string Serialized = JsonConvert.SerializeObject(values);
+            HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
+            //var data = new FormUrlEncodedContent(values);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PutAsync(url, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var test = response.Content.ReadAsStringAsync().Result;
+                return token;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
