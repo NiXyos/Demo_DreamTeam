@@ -8,11 +8,24 @@
 
 <form asp-controller="Home" asp-action="Login" method="post">
     <div>
-    <h3 style="color: white;">Username :</h3>
-    <input asp-for="@Username" />
-    <h3 style="color: white;">Password :</h3>
-    <input type="password" asp-for="@Password" />
-        </div>
+        <h3 style="color: white;">Username :</h3>
+        <input asp-for="@Username" />
+        <h3 style="color: white;">Password :</h3>
+        <input type="password" asp-for="@Password" />
+        @if (!String.IsNullOrWhiteSpace(ViewBag.Erreur))
+        {
+            <p style="color:red">@ViewBag.Erreur</p>
+        }
+    </div>
     <button type="submit">Connexion</button>
 </form>
+
+@if (ViewBag.Erreur != null)
+{
+    <script type="text/javascript">
+                    window.onload = function () {
+                        alert("@ViewBag.Erreur")
+                    };
+    </script>
+}
 

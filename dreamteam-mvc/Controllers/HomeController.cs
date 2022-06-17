@@ -1,6 +1,7 @@
 ﻿using dreamteam_mvc.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -77,12 +78,15 @@ namespace dreamteam_mvc.Controllers
                 HttpContext.Session.SetString("token", token.Result);
                 Index();
                 isConnected();
+                ViewBag.Message = "Connection Succes";
+
                 return View("Index");
             }
             else
             {
                 Console.WriteLine("User not found");
                 isConnected();
+                ViewBag.Erreur = "User not found";
                 return View("Authentification");
             }
         }
@@ -95,9 +99,20 @@ namespace dreamteam_mvc.Controllers
         public IActionResult AjoutMap(string Name, string Place, string MapUrl)
         {
             var test = ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
-            Index();
-            isConnected();
-            return View("Index");
+            if (test.Result != null)
+            {
+                Index();
+                isConnected();
+                ViewBag.Message = "Creation reussi";
+                return View("Index");
+            }
+            else
+            {
+                Console.WriteLine("Echec création");
+                isConnected();
+                ViewBag.Erreur = "Creation failed";
+                return View("AddMap");
+            }
         }
 
         public IActionResult ModifMap(int Id)
@@ -121,14 +136,34 @@ namespace dreamteam_mvc.Controllers
         public IActionResult PutMap(string Id ,string Name, string Place, string MapUrl)
         {
             var test = ApiConnector.PutMap(Id,Name, Place, MapUrl, HttpContext.Session.GetString("token"));
-            Index();
-            isConnected();
-            return View("Index");
+            if (test.Result != null)
+            {
+                Index();
+                isConnected();
+                ViewBag.Message = "Update reussi";
+                return View("Index");
+            }
+            else
+            {
+                Console.WriteLine("Echec création");
+                isConnected();
+                ViewBag.Erreur = "Update failed";
+                ModifMap(Convert.ToInt32(Id));
+                return View("AddMap");
+            }
         }
 
         public IActionResult DeleteMap(int Id)
         {
             var test = ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
+            if (test.Result != null)
+            {
+                ViewBag.Message = "Suppression reussi";
+            }
+            else
+            {
+                ViewBag.Message = "Suppression fail";
+            }
             Index();
             isConnected();
             return View("Index");

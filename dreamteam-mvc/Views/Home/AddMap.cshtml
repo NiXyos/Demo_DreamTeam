@@ -41,3 +41,12 @@ else
     </div>
     <button type="submit">Ajouter</button>
 </form>
+
+@if (ViewBag.Erreur != null)
+{
+    <script type="text/javascript">
+                    window.onload = function () {
+                        alert("@ViewBag.Erreur")
+                    };
+    </script>
+}
