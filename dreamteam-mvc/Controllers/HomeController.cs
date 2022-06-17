@@ -73,9 +73,9 @@ namespace dreamteam_mvc.Controllers
         public IActionResult Login(string UserName, string Password)
         {
             var token = ApiConnector.Login(UserName, Password);
-            if (token.Result != null)
+            if (token.Result.IsSuccessStatusCode)
             {
-                HttpContext.Session.SetString("token", token.Result);
+                HttpContext.Session.SetString("token", token.Result.Content.ReadAsStringAsync().Result);
                 Index();
                 isConnected();
                 ViewBag.Message = "Connection Succes";
@@ -86,7 +86,7 @@ namespace dreamteam_mvc.Controllers
             {
                 Console.WriteLine("User not found");
                 isConnected();
-                ViewBag.Erreur = "User not found";
+                ViewBag.Erreur = "Login fail : " + token.Result.ReasonPhrase;
                 return View("Authentification");
             }
         }
@@ -99,7 +99,7 @@ namespace dreamteam_mvc.Controllers
         public IActionResult AjoutMap(string Name, string Place, string MapUrl)
         {
             var test = ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
-            if (test.Result != null)
+            if (test.Result.IsSuccessStatusCode)
             {
                 Index();
                 isConnected();
@@ -110,7 +110,7 @@ namespace dreamteam_mvc.Controllers
             {
                 Console.WriteLine("Echec création");
                 isConnected();
-                ViewBag.Erreur = "Creation failed";
+                ViewBag.Erreur = "Creation failed : " + test.Result.ReasonPhrase;
                 return View("AddMap");
             }
         }
@@ -122,21 +122,31 @@ namespace dreamteam_mvc.Controllers
             //var test = ApiConnector.PostMap(Name, Place, MapUrl, HttpContext.Session.GetString("token"));
             //Index();
             isConnected();
-            if (map.Result != null)
+            /*if (map.Result != null)*/
+            if (map.Result.IsSuccessStatusCode)   
             {
                 ViewBag.Modif = true;
-                MapModel uneMap = JsonConvert.DeserializeObject<MapModel>(map.Result);
+                MapModel uneMap = JsonConvert.DeserializeObject<MapModel>(map.Result.Content.ReadAsStringAsync().Result);
                 ViewBag.Name = uneMap.Name;
                 ViewBag.Place = uneMap.Place;
                 ViewBag.MapUrl = uneMap.MapUrl;
+                return View("AddMap");
             }
-            return View("AddMap");
+            else
+            {
+                Console.WriteLine("Echec récupération map");
+                isConnected();
+                Index();
+                ViewBag.Erreur = "Erreur recuperation map : " + map.Result.ReasonPhrase;
+                return View("Index");
+            }
+            
         }
 
         public IActionResult PutMap(string Id ,string Name, string Place, string MapUrl)
         {
             var test = ApiConnector.PutMap(Id,Name, Place, MapUrl, HttpContext.Session.GetString("token"));
-            if (test.Result != null)
+            if (test.Result.IsSuccessStatusCode)
             {
                 Index();
                 isConnected();
@@ -145,9 +155,9 @@ namespace dreamteam_mvc.Controllers
             }
             else
             {
-                Console.WriteLine("Echec création");
+                Console.WriteLine("Echec update");
                 isConnected();
-                ViewBag.Erreur = "Update failed";
+                ViewBag.Erreur = "Update failed : " + test.Result.ReasonPhrase;
                 ModifMap(Convert.ToInt32(Id));
                 return View("AddMap");
             }
@@ -156,13 +166,13 @@ namespace dreamteam_mvc.Controllers
         public IActionResult DeleteMap(int Id)
         {
             var test = ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
-            if (test.Result != null)
+            if (test.Result.IsSuccessStatusCode)
             {
                 ViewBag.Message = "Suppression reussi";
             }
             else
             {
-                ViewBag.Message = "Suppression fail";
+                ViewBag.Message = "Suppression échouée : " + test.Result.ReasonPhrase;
             }
             Index();
             isConnected();

@@ -91,7 +91,7 @@ namespace dreamteam_mvc
 
         }
 
-        public static async Task<string> Login(string UserName, string Password)
+        public static async Task<HttpResponseMessage> Login(string UserName, string Password)
         {
             HttpClient client = new HttpClient();
             var values = new Dictionary<string, string>
@@ -104,7 +104,8 @@ namespace dreamteam_mvc
             HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
             //var data = new FormUrlEncodedContent(values);
             var response = await client.PostAsync(url, content);
-            if (response.IsSuccessStatusCode)
+            return response;
+            /*if (response.IsSuccessStatusCode)
             {
                 var token = response.Content.ReadAsStringAsync().Result;
                 return token;
@@ -112,10 +113,10 @@ namespace dreamteam_mvc
             else
             {
                 return null;
-            }
+            }*/
         }
 
-        public static async Task<string> PostMap(string Name, string Place, string MapUrl, string token)
+        public static async Task<HttpResponseMessage> PostMap(string Name, string Place, string MapUrl, string token)
         {
             HttpClient client = new HttpClient();
             var values = new Dictionary<string, string>
@@ -130,18 +131,19 @@ namespace dreamteam_mvc
             //var data = new FormUrlEncodedContent(values);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await client.PostAsync(url, content);
-            if (response.IsSuccessStatusCode)
-            {
-                var test = response.Content.ReadAsStringAsync().Result;
-                return token;
-            }
-            else
-            {
-                return null;
-            }
+            return response;
+            //if (response.IsSuccessStatusCode)
+           // {
+            //    var test = response.Content.ReadAsStringAsync().Result;
+            //    return token;
+           // }
+           // else
+           // {
+           //     return null;
+            //}
         }
 
-        public static async Task<string> DeleteMap(int Id, string token)
+        public static async Task<HttpResponseMessage> DeleteMap(int Id, string token)
         {
             HttpClient client = new HttpClient();
             string url = @"https://apivalorant.azurewebsites.net/api/maps/" + Id;
@@ -149,18 +151,18 @@ namespace dreamteam_mvc
             //var data = new FormUrlEncodedContent(values);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await client.DeleteAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-                var test = response.Content.ReadAsStringAsync().Result;
-                return token;
-            }
-            else
-            {
-                return null;
-            }
+            //if (response.IsSuccessStatusCode)
+            //{
+             //   var test = response.Content.ReadAsStringAsync().Result;
+                return response;
+            //}
+           // else
+            //{
+           //     return null;
+           // }
         }
 
-        public static async Task<string> GetAMap(int Id)
+        public static async Task<HttpResponseMessage> GetAMap(int Id)
         {
             HttpClient client = new HttpClient();
             
@@ -168,18 +170,19 @@ namespace dreamteam_mvc
             string url = @"https://apivalorant.azurewebsites.net/api/maps/" + Id;
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            if (response.IsSuccessStatusCode)
-            {
-                var map = response.Content.ReadAsStringAsync().Result;
-                return map;
-            }
-            else
-            {
-                return null;
-            }
+            //if (response.IsSuccessStatusCode)
+            //{
+              //  var map = response.Content.ReadAsStringAsync().Result;
+              //  var test = response.Content.ReadAsStringAsync().Status;
+                return response;
+           // }
+           // else
+           // {
+           //     return null;
+           // }
         }
 
-        public static async Task<string> PutMap(string Id,string Name, string Place, string MapUrl, string token)
+        public static async Task<HttpResponseMessage> PutMap(string Id,string Name, string Place, string MapUrl, string token)
         {
             HttpClient client = new HttpClient();
             var values = new Dictionary<string, string>
@@ -195,7 +198,8 @@ namespace dreamteam_mvc
             //var data = new FormUrlEncodedContent(values);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await client.PutAsync(url, content);
-            if (response.IsSuccessStatusCode)
+            return response;
+            /*if (response.IsSuccessStatusCode)
             {
                 var test = response.Content.ReadAsStringAsync().Result;
                 return token;
@@ -203,7 +207,7 @@ namespace dreamteam_mvc
             else
             {
                 return null;
-            }
+            }*/
         }
 
 
