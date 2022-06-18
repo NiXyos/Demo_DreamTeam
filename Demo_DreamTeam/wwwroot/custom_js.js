@@ -128,11 +128,11 @@ $(document).ready(function(){
   });
 });
 
-$(document).ready(function(){
+/*$(document).ready(function(){
   $("#btn-github").click(function(){
-    window.open('https://github.com/jma8774/Valorant-Agents-Website', '_blank');
+   // window.open('https://github.com/jma8774/Valorant-Agents-Website', '_blank');
   });
-});
+});*/
 
 // Card Hide/Show Toggles
 var border_character = ""
