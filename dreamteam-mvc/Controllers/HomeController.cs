@@ -1,14 +1,11 @@
 ﻿using dreamteam_mvc.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace dreamteam_mvc.Controllers
 {
@@ -195,8 +192,8 @@ namespace dreamteam_mvc.Controllers
                 ViewBag.Erreur = "Erreur recuperation map : " + response.Result.ReasonPhrase;
                 return View("Index");
             }
-            
-            
+
+
         }
 
         public IActionResult Weapon(int id)
