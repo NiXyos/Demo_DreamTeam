@@ -2,9 +2,9 @@
     var Name = "";
     var Place = "";
     var MapUrl = "";
-    var Id = 0;
+    var Id = "";
     var Test = "";
-    if (ViewBag.MoDif == true)
+    if (ViewBag.Modif == true)
     {
         ViewData["Title"] = "Modif map";
         Name = ViewBag.Name;
@@ -21,7 +21,7 @@
 }
 <h1 style="color: white;">@ViewData["Title"]</h1>
 
-@if (ViewBag.MoDif == true)
+@if (ViewBag.Modif == true)
 {
     Test = "PutMap";
 }
