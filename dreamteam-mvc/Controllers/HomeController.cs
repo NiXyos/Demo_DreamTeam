@@ -161,7 +161,7 @@ namespace dreamteam_mvc.Controllers
             }
         }
 
-        public IActionResult DeleteMap(int Id)
+        public IActionResult SuppressionMap(int Id)
         {
             var response = ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
             if (response.Result.IsSuccessStatusCode)
