@@ -39,7 +39,14 @@ else
         <h3 style="color: white;">Url :</h3>
         <input asp-for="@MapUrl" />
     </div>
-    <button type="submit">Ajouter</button>
+    @if (ViewBag.Modif == true)
+    {
+<button type="submit">Modifier</button>
+    }
+    else
+    {
+        <button type="submit">Ajouter</button>
+    }
 </form>
 
 @if (ViewBag.Erreur != null)
