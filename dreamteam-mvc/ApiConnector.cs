@@ -12,6 +12,7 @@ namespace dreamteam_mvc
 {
     public static class ApiConnector
     {
+        private static string urlApi = "https://apivalorant.azurewebsites.net";
         public static async Task<string> GetPersonnage()
         {
             HttpClient client = new HttpClient();
@@ -21,7 +22,7 @@ namespace dreamteam_mvc
                 { "password", "myPassword" }
             };
 
-            string url = @"https://apivalorant.azurewebsites.net/api/characters";
+            string url = @$"{urlApi}/api/characters";
             var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
@@ -40,7 +41,7 @@ namespace dreamteam_mvc
                 { "password", "myPassword" }
             };
 
-            string url = @"https://apivalorant.azurewebsites.net/api/weapons";
+            string url = @$"{urlApi}/api/weapons";
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsStringAsync().Result;
@@ -55,7 +56,7 @@ namespace dreamteam_mvc
                 { "password", "myPassword" }
             };
 
-            string url = @"https://apivalorant.azurewebsites.net/api/maps";
+            string url = @$"{urlApi}/api/maps";
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsStringAsync().Result;
@@ -70,7 +71,7 @@ namespace dreamteam_mvc
                 { "password", "myPassword" }
             };
 
-            string url = @"https://apivalorant.azurewebsites.net/api/abilitys";
+            string url = @$"{urlApi}/api/abilitys";
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsStringAsync().Result;
@@ -85,7 +86,7 @@ namespace dreamteam_mvc
                 { "password", "myPassword" }
             };
 
-            string url = @"https://apivalorant.azurewebsites.net/api/ultimates";
+            string url = @$"{urlApi}/api/ultimates";
             var response = await client.GetAsync(url);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response.Content.ReadAsStringAsync().Result;
@@ -102,7 +103,7 @@ namespace dreamteam_mvc
                 { "username", UserName },
                 { "password", Password }
             };
-            string url = @"https://apivalorant.azurewebsites.net/api/login";
+            string url = @$"{urlApi}/api/login";
             //On converti le dictionnaire en string au format json
             string Serialized = JsonConvert.SerializeObject(values);
             //On crée le content de la requete à partir du string json
@@ -122,7 +123,7 @@ namespace dreamteam_mvc
                 { "username", UserName },
                 { "password", Password }
             };
-            string url = @"https://apivalorant.azurewebsites.net/api/roles";
+            string url = @$"{urlApi}/api/roles";
            // string url = @"https://localhost:44348/api/roles";
             string Serialized = JsonConvert.SerializeObject(values);
             HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
@@ -140,7 +141,7 @@ namespace dreamteam_mvc
                 { "place", Place },
                 { "mapUrl", MapUrl }
             };
-            string url = @"https://apivalorant.azurewebsites.net/api/maps";
+            string url = @$"{urlApi}/api/maps";
             string Serialized = JsonConvert.SerializeObject(values);
             HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
             //Passage du token en tant que bearer authorization
@@ -153,7 +154,7 @@ namespace dreamteam_mvc
         {
             //Lancement de la requete permettant la suppression d'une map
             HttpClient client = new HttpClient();
-            string url = @"https://apivalorant.azurewebsites.net/api/maps/" + Id;
+            string url = @$"{urlApi}/api/maps/" + Id;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await client.DeleteAsync(url);
                 return response;
@@ -163,7 +164,7 @@ namespace dreamteam_mvc
         {
             //Lancement de la requete permettant de récupérer les informations d'une map
             HttpClient client = new HttpClient();
-            string url = @"https://apivalorant.azurewebsites.net/api/maps/" + Id;
+            string url = @$"{urlApi}/api/maps/" + Id;
             var response = await client.GetAsync(url);
             //Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 return response;
@@ -181,7 +182,7 @@ namespace dreamteam_mvc
             };*/
             
 
-            string url = @"https://apivalorant.azurewebsites.net/api/maps/" + Id;
+            string url = @$"{urlApi}/api/maps/" + Id;
             //Etant donné que le put doit recevoir aussi l'id de la map dans le body, et que l'id est un string, la méthode du dictionnaire n'est pas possible
             // création d'un objet json correspondant au body
             var json = new JObject(new JProperty("id", Convert.ToInt32(Id)), new JProperty("name", Name), new JProperty("place", Place), new JProperty("mapUrl", MapUrl));
