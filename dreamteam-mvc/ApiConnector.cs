@@ -107,6 +107,22 @@ namespace dreamteam_mvc
             return response;
         }
 
+        public static async Task<HttpResponseMessage> Roles(string UserName, string Password)
+        {
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
+            {
+                { "username", UserName },
+                { "password", Password }
+            };
+            /*string url = @"https://apivalorant.azurewebsites.net/api/roles";*/
+            string url = @"https://localhost:44348/api/roles";
+            string Serialized = JsonConvert.SerializeObject(values);
+            HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
+            var response = await client.PostAsync(url, content);
+            return response;
+        }
+
         public static async Task<HttpResponseMessage> PostMap(string Name, string Place, string MapUrl, string token)
         {
             HttpClient client = new HttpClient();

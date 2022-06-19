@@ -63,6 +63,7 @@ namespace dreamteam_mvc.Controllers
         {
             Index();
             HttpContext.Session.Remove("token");
+            HttpContext.Session.Remove("role");
             isConnected();
             return View("Index");
         }
@@ -73,6 +74,11 @@ namespace dreamteam_mvc.Controllers
             if (response.Result.IsSuccessStatusCode)
             {
                 HttpContext.Session.SetString("token", response.Result.Content.ReadAsStringAsync().Result);
+                var response2 = ApiConnector.Roles(UserName, Password);
+                if (response2.Result.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetString("role", response2.Result.Content.ReadAsStringAsync().Result);
+                }
                 Index();
                 isConnected();
                 ViewBag.Message = "Connection Succes";
@@ -90,8 +96,18 @@ namespace dreamteam_mvc.Controllers
 
         public IActionResult AddMap()
         {
-            isConnected();
-            return View();
+            if (HttpContext.Session.GetString("role") == "Admin")
+            {
+                isConnected();
+                return View();
+            }
+            else
+            {
+                Index();
+                isConnected();
+                ViewBag.Message = "Seul les admins peuvent ajouter des maps";
+                return View("Index");
+            }
         }
         public IActionResult AjoutMap(string Name, string Place, string MapUrl)
         {
@@ -114,25 +130,35 @@ namespace dreamteam_mvc.Controllers
 
         public IActionResult ModifMap(int Id)
         {
-            var response = ApiConnector.GetAMap(Id);
-            Console.WriteLine(response);
-            isConnected();
-            if (response.Result.IsSuccessStatusCode)   
+            if (HttpContext.Session.GetString("role") == "Admin")
             {
-                ViewBag.Modif = true;
-                MapModel uneMap = JsonConvert.DeserializeObject<MapModel>(response.Result.Content.ReadAsStringAsync().Result);
-                ViewBag.Name = uneMap.Name;
-                ViewBag.Place = uneMap.Place;
-                ViewBag.MapUrl = uneMap.MapUrl;
-                ViewBag.Id = Convert.ToString(uneMap.Id);
-                return View("AddMap");
+                var response = ApiConnector.GetAMap(Id);
+                Console.WriteLine(response);
+                isConnected();
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    ViewBag.Modif = true;
+                    MapModel uneMap = JsonConvert.DeserializeObject<MapModel>(response.Result.Content.ReadAsStringAsync().Result);
+                    ViewBag.Name = uneMap.Name;
+                    ViewBag.Place = uneMap.Place;
+                    ViewBag.MapUrl = uneMap.MapUrl;
+                    ViewBag.Id = Convert.ToString(uneMap.Id);
+                    return View("AddMap");
+                }
+                else
+                {
+                    Console.WriteLine("Echec récupération map");
+                    isConnected();
+                    Index();
+                    ViewBag.Erreur = "Erreur recuperation map : " + response.Result.ReasonPhrase;
+                    return View("Index");
+                }
             }
             else
             {
-                Console.WriteLine("Echec récupération map");
-                isConnected();
                 Index();
-                ViewBag.Erreur = "Erreur recuperation map : " + response.Result.ReasonPhrase;
+                isConnected();
+                ViewBag.Message = "Seul les admins peuvent modifier des maps";
                 return View("Index");
             }
             
@@ -160,18 +186,28 @@ namespace dreamteam_mvc.Controllers
 
         public IActionResult SuppressionMap(int Id)
         {
-            var response = ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
-            if (response.Result.IsSuccessStatusCode)
+            if (HttpContext.Session.GetString("role") == "Admin")
             {
-                ViewBag.Message = "Suppression reussi";
+                var response = ApiConnector.DeleteMap(Id, HttpContext.Session.GetString("token"));
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    ViewBag.Message = "Suppression reussi";
+                }
+                else
+                {
+                    ViewBag.Message = "Suppression échouée : " + response.Result.ReasonPhrase;
+                }
+                Index();
+                isConnected();
+                return View("Index");
             }
             else
             {
-                ViewBag.Message = "Suppression échouée : " + response.Result.ReasonPhrase;
+                Index();
+                isConnected();
+                ViewBag.Message = "Seul les admins peuvent supprimer des maps";
+                return View("Index");
             }
-            Index();
-            isConnected();
-            return View("Index");
         }
 
         public IActionResult Map(int id)
