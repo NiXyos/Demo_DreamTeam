@@ -68,7 +68,8 @@ namespace dreamteam_mvc.Controllers
             HttpContext.Session.Remove("token");
             HttpContext.Session.Remove("role");
             isConnected();
-            return View("Index");
+            //return View("Index");
+            return View();
         }
 
         public IActionResult Login(string UserName, string Password)

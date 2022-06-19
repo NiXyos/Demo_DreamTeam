@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32526.322
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo_DreamTeam", "Demo_DreamTeam\Demo_DreamTeam.csproj", "{30AD0AC7-E93C-46AF-9AD0-FE942D5E56E9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dreamteam-mvc", "dreamteam-mvc\dreamteam-mvc.csproj", "{03F29951-4F91-41E5-A65F-361D69F47078}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dreamteam-mvc", "dreamteam-mvc\dreamteam-mvc.csproj", "{03F29951-4F91-41E5-A65F-361D69F47078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{30AD0AC7-E93C-46AF-9AD0-FE942D5E56E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30AD0AC7-E93C-46AF-9AD0-FE942D5E56E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30AD0AC7-E93C-46AF-9AD0-FE942D5E56E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30AD0AC7-E93C-46AF-9AD0-FE942D5E56E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{03F29951-4F91-41E5-A65F-361D69F47078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{03F29951-4F91-41E5-A65F-361D69F47078}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03F29951-4F91-41E5-A65F-361D69F47078}.Release|Any CPU.ActiveCfg = Release|Any CPU
