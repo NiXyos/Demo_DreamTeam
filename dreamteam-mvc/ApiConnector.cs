@@ -115,8 +115,8 @@ namespace dreamteam_mvc
                 { "username", UserName },
                 { "password", Password }
             };
-            /*string url = @"https://apivalorant.azurewebsites.net/api/roles";*/
-            string url = @"https://localhost:44348/api/roles";
+            string url = @"https://apivalorant.azurewebsites.net/api/roles";
+           // string url = @"https://localhost:44348/api/roles";
             string Serialized = JsonConvert.SerializeObject(values);
             HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
             var response = await client.PostAsync(url, content);
