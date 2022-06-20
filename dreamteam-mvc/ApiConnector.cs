@@ -143,6 +143,50 @@ namespace dreamteam_mvc
             return response;
         }
 
+        //-------------- PERSO ------------
+        public static async Task<HttpResponseMessage> PostPersonnage(string Name, string Country, string Description, string IconUrl, string token)
+        {
+            //Lancement de la requete permettant l'ajout d'une map
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
+            {
+                { "name", Name },
+                { "country", Country },
+                { "description", Description },
+                { "iconUrl", IconUrl }
+            };
+            string url = @$"{urlApi}/api/weapons";
+            string Serialized = JsonConvert.SerializeObject(values);
+            HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
+            //Passage du token en tant que bearer authorization
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PostAsync(url, content);
+            return response;
+        }
+
+        // --------- WEAPONS --------------
+        public static async Task<HttpResponseMessage> PostWeapon(string Name, string Category, string Cost, string Description, string WeaponUrl, string token)
+        {
+            //Lancement de la requete permettant l'ajout d'une map
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
+            {
+                { "name", Name },
+                { "cost", Cost },
+                { "category", Category },
+                { "description", Description },
+                { "mapUrl", WeaponUrl }
+            };
+            string url = @$"{urlApi}/api/weapons";
+            string Serialized = JsonConvert.SerializeObject(values);
+            HttpContent content = new StringContent(Serialized, System.Text.Encoding.Unicode, "application/json");
+            //Passage du token en tant que bearer authorization
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PostAsync(url, content);
+            return response;
+        }
+
+        // -------- MAPS --------
         public static async Task<HttpResponseMessage> PostMap(string Name, string Place, string MapUrl, string token)
         {
             //Lancement de la requete permettant l'ajout d'une map

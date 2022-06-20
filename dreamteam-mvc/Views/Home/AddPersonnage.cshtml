@@ -1,43 +1,43 @@
 ﻿@{
     var Name = "";
-    var Place = "";
-    var MapUrl = "";
+    var Origin = "";
+    var Desc = "";
+    var IconUrl = "";
     var Id = "";
     var Test = "";
     if (ViewBag.Modif == true)
     {
-        ViewData["Title"] = "Modif map";
+        ViewData["Title"] = "Modif Personnage";
         Name = ViewBag.Name;
-        Place = ViewBag.Place;
-        MapUrl = ViewBag.MapUrl;
+        Origin = ViewBag.Country;
+        Desc = ViewBag.Description;
+        IconUrl = ViewBag.IconUrl;
         Id = ViewBag.Id;
     }
     else
     {
-        ViewData["Title"] = "Ajout map";
+        ViewData["Title"] = "Ajout Personnage";
     }
-
-
 }
 <h1 style="color: white;">@ViewData["Title"]</h1>
 
 @if (ViewBag.Modif == true)
 {
-    Test = "PutMap";
+    Test = "PutPerso";
 }
 else
 {
-    Test = "AjoutMap";
+    Test = "AjoutPerso";
 }
 <form asp-controller="Home" asp-action="@Test" method="post">
     <div>
         <input type="hidden" asp-for="@Id" />
-        <h3 style="color: white;">Nom de la map :</h3>
+        <h3 style="color: white;">Nom :</h3>
         <input asp-for="@Name" />
-        <h3 style="color: white;">Pays :</h3>
-        <input asp-for="@Place" />
-        <h3 style="color: white;">Url :</h3>
-        <input asp-for="@MapUrl" />
+        <h3 style="color: white;">Pays d'origine :</h3>
+        <input asp-for="@Origin" />
+        <h3 style="color: white;">Description :</h3>
+        <input asp-for="@Desc" />
     </div>
     @if (ViewBag.Modif == true)
     {

@@ -72,7 +72,8 @@
     <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Armes</button>
     @if (ViewBag.Connecte == true && ViewBag.Role == "Admin")
     {
-    <a asp-controller="Home" asp-action="SetItem"> Nouvelle Arme </a>
+        <a asp-controller="Home" asp-action="AddWeapon"> Nouvelle Arme </a>
+        <!--<a asp-controller="Home" asp-action="SetItem"> Nouvelle Arme </a>-->
     }
 </div>
 

@@ -27,21 +27,25 @@
 
 @if (ViewBag.Modif == true)
 {
-    Test = "PutMap";
+    Test = "PutArme";
 }
 else
 {
-    Test = "AjoutMap";
+    Test = "AjoutArme";
 }
 <form asp-controller="Home" asp-action="@Test" method="post">
     <div>
         <input type="hidden" asp-for="@Id" />
-        <h3 style="color: white;">Nom de la map :</h3>
+        <h3 style="color: white;">Nom :</h3>
         <input asp-for="@Name" />
-        <h3 style="color: white;">Pays :</h3>
-        <input asp-for="@Place" />
-        <h3 style="color: white;">Url :</h3>
-        <input asp-for="@MapUrl" />
+        <h3 style="color: white;">Categorie :</h3>
+        <input asp-for="@Category" />
+        <h3 style="color: white;">Description :</h3>
+        <input asp-for="@Description" />
+        <h3 style="color: white;">Cout :</h3>
+        <input asp-for="@Cost" />
+        <h3 style="color: white;">Url image :</h3>
+        <input asp-for="@WeaponUrl" />
     </div>
     @if (ViewBag.Modif == true)
     {

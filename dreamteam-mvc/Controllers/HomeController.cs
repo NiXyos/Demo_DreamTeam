@@ -38,8 +38,44 @@ namespace dreamteam_mvc.Controllers
             return View();
         }
 
-        
-            public IActionResult Index()
+        public IActionResult AddPersonnage()
+        {
+            //Verification que l'utilisateur est un admin avant de lui afficher la page d'ajout
+            if (HttpContext.Session.GetString("role") == "Admin")
+            {
+                isConnected();
+                return View();
+            }
+            else
+            {
+                //Sinon message explicatif
+                Index();
+                isConnected();
+                ViewBag.Message = "Seul les admins peuvent ajouter des maps";
+                return View("Index");
+            }
+        }
+        public IActionResult AjoutPersonnage(string Name, string Country, string Desc, string IconUrl)
+        {
+            //Appel de la méthode lançant la requete http de création de map en lui passant le token pour vérification des droits
+            var response = ApiConnector.PostPersonnage(Name, Country, Desc, IconUrl, HttpContext.Session.GetString("token"));
+            //Si création réussi on retourne sur la page d'index avec un message de succès
+            if (response.Result.IsSuccessStatusCode)
+            {
+                TempData["Message"] = "Creation reussie";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //Sinon on retourne sur la page de création avec un message d'erreur
+                //Console.WriteLine("Echec création");
+                isConnected();
+                ViewBag.Erreur = "Creation failed : " + response.Result.ReasonPhrase;
+                return View("AddPersonnage");
+            }
+        }
+
+        public IActionResult Index()
         {
             ViewBag.Connecte = false;
             List<PersonnageModel> lstperso = new PersonnageModel().GetListePersonnages();
@@ -68,7 +104,6 @@ namespace dreamteam_mvc.Controllers
             isConnected();
             return View();
         }
-
         public IActionResult Deconnexion()
         {
             //Lors de la deconnexion suppression des variables de sessions
@@ -81,7 +116,6 @@ namespace dreamteam_mvc.Controllers
             //return View("Index");
             return RedirectToAction("Index");
         }
-
         public IActionResult Login(string UserName, string Password)
         {
             if (!TempData.ContainsKey("Erreur")) TempData.Add("Erreur", "");
@@ -127,6 +161,7 @@ namespace dreamteam_mvc.Controllers
             }
         }
 
+        // -------- MAPS ------
         public IActionResult AddMap()
         {
             //Verification que l'utilisateur est un admin avant de lui afficher la page d'ajout
@@ -165,7 +200,6 @@ namespace dreamteam_mvc.Controllers
                 return View("AddMap");
             }
         }
-
         public IActionResult ModifMap(int Id)
         {
             //On vérifie que l'utilisateur est un admin pour autoriser la modif d'une map
@@ -205,7 +239,6 @@ namespace dreamteam_mvc.Controllers
             }
             
         }
-
         public IActionResult PutMap(string Id ,string Name, string Place, string MapUrl)
         {
             //Appel à la méthode de modification  de la map
@@ -226,7 +259,6 @@ namespace dreamteam_mvc.Controllers
                 return View("AddMap");
             }
         }
-
         public IActionResult SuppressionMap(int Id)
         {
             //Meme fonctionnement mais pour la suppression
@@ -254,7 +286,6 @@ namespace dreamteam_mvc.Controllers
                 return View("Index");
             }
         }
-
         public IActionResult Map(int id)
         {
             //Récupération des infos d'une map
@@ -276,24 +307,7 @@ namespace dreamteam_mvc.Controllers
             }
         }
 
-        //
-        public IActionResult SetItem()
-        {
-            //Verification que l'utilisateur est un admin avant de lui afficher la page d'ajout
-            if (HttpContext.Session.GetString("role") == "Admin")
-            {
-                isConnected();
-                return View("SetPersonnage");  //ON DOIT RETOURNER LA BONNE VUE SELON L'ITEM
-            }
-            else
-            {
-                //Sinon message explicatif
-                isConnected();
-                ViewBag.Message = "Seul les admins peuvent ajouter des éléments";
-                return RedirectToAction("Index");
-            }
-        }
-
+        //---------- WEAPONS -------
         public IActionResult Weapon(int id)
         {
             List<WeaponModel> lst = new WeaponModel().GetListeWeapons();
@@ -306,6 +320,42 @@ namespace dreamteam_mvc.Controllers
             }
             isConnected();
             return View();
+        }
+        public IActionResult AddWeapon()
+        {
+            //Verification que l'utilisateur est un admin avant de lui afficher la page d'ajout
+            if (HttpContext.Session.GetString("role") == "Admin")
+            {
+                isConnected();
+                return View();
+            }
+            else
+            {
+                //Sinon message explicatif
+                Index();
+                isConnected();
+                ViewBag.Message = "Seul les admins peuvent ajouter des maps";
+                return View("Index");
+            }
+        }
+        public IActionResult AjoutWeapon(string Name, string Category, string Cost, string Description, string WeaponUrl)
+        {
+            //Appel de la méthode lançant la requete http de création de map en lui passant le token pour vérification des droits
+            var response = ApiConnector.PostWeapon(Name, Category, Cost, Description, WeaponUrl, HttpContext.Session.GetString("token"));
+            //Si création réussi on retourne sur la page d'index avec un message de succès
+            if (response.Result.IsSuccessStatusCode)
+            {
+                TempData["Message"] = "Creation reussie";                
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //Sinon on retourne sur la page de création avec un message d'erreur
+                //Console.WriteLine("Echec création");
+                isConnected();
+                ViewBag.Erreur = "Creation failed : " + response.Result.ReasonPhrase;
+                return View("AddWeapon");
+            }
         }
 
         public void isConnected()
@@ -326,6 +376,24 @@ namespace dreamteam_mvc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        //OTHERS
+        public IActionResult SetItem()
+        {
+            //Verification que l'utilisateur est un admin avant de lui afficher la page d'ajout
+            if (HttpContext.Session.GetString("role") == "Admin")
+            {
+                isConnected();
+                return View("SetPersonnage");  //ON DOIT RETOURNER LA BONNE VUE SELON L'ITEM
+            }
+            else
+            {
+                //Sinon message explicatif
+                isConnected();
+                ViewBag.Message = "Seul les admins peuvent ajouter des éléments";
+                return RedirectToAction("Index");
+            }
         }
     }
 }
