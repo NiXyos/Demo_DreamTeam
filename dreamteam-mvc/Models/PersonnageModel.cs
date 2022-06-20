@@ -11,7 +11,7 @@ namespace dreamteam_mvc.Models
         public string Role { get; set; }
         public string Description { get; set; }
         public int Ultld { get; set; }
-        //public AbilityModel[] Abilities { get; set; }
+        public AbilityModel[] Abilities { get; set; }
         public UltimateModel Ult { get; set; }
         public string PicUrl { get; set; }
 
@@ -29,6 +29,31 @@ namespace dreamteam_mvc.Models
                 return new List<PersonnageModel>();
             }
             
+        }
+
+        public PersonnageModel GetPersonnage(int id)
+        {
+            try
+            {
+                var response = ApiConnector.GetAPersonnage(id);
+
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    PersonnageModel perso = JsonConvert.DeserializeObject<PersonnageModel>(response.Result.Content.ReadAsStringAsync().Result);
+
+                    return perso;
+                }
+                else
+                {
+
+                }
+                return null;
+            }
+            catch (System.Exception)
+            {
+
+                return new PersonnageModel { Id = -1};
+            }
         }
     }
 

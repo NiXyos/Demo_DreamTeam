@@ -21,15 +21,19 @@ namespace dreamteam_mvc.Controllers
 
         public IActionResult Personnage(int id)
         {
-            List<PersonnageModel> lst = new PersonnageModel().GetListePersonnages();
-            List<AbilityModel> lstmap = new AbilityModel().GetListeAbilitys();
-            foreach (PersonnageModel personnage in lst)
+            //PersonnageModel perso = new PersonnageModel().GetPersonnage(id);
+
+            var response = ApiConnector.GetAPersonnage(id);
+
+            if (response.Result.IsSuccessStatusCode)
             {
-                if (personnage.Id == id)
-                {
-                    ViewBag.Perso = personnage;
-                }
+                ViewBag.Perso = JsonConvert.DeserializeObject<PersonnageModel>(response.Result.Content.ReadAsStringAsync().Result);
             }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
             isConnected();
             return View();
         }
@@ -41,7 +45,8 @@ namespace dreamteam_mvc.Controllers
             List<PersonnageModel> lstperso = new PersonnageModel().GetListePersonnages();
             if (lstperso.Count < 1)
             {
-                return View();
+                ViewBag.Erreur = "Erreur pendant la récupération des données personnage";
+                return View("Index");
             }
 
             List<MapModel> lstmap = new MapModel().GetListeMaps();
@@ -49,8 +54,12 @@ namespace dreamteam_mvc.Controllers
             ViewBag.Persos = lstperso;
             ViewBag.Maps = lstmap;
             ViewBag.Weapons = lstweapon;
+
             isConnected();
-            return View();
+            ViewBag.Erreur = (TempData.ContainsKey("Erreur") && !TempData["Erreur"].Equals("")) ? TempData["Erreur"] : null;
+            ViewBag.Message = TempData.ContainsKey("Message") && !TempData["Message"].Equals("") ? TempData["Message"] : null;
+
+            return View("Index");
         }
 
         public IActionResult Authentification()
@@ -64,16 +73,20 @@ namespace dreamteam_mvc.Controllers
         {
             //Lors de la deconnexion suppression des variables de sessions
             //Et rechargement de la page index
-            Index();
+            //Index();
             HttpContext.Session.Remove("token");
             HttpContext.Session.Remove("role");
+            ViewBag.Role = "";
             isConnected();
             //return View("Index");
-            return View();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Login(string UserName, string Password)
         {
+            if (!TempData.ContainsKey("Erreur")) TempData.Add("Erreur", "");
+            if (!TempData.ContainsKey("Message")) TempData.Add("Message", "");
+
             //Appel de la mthode lançant la requete http
             var response = ApiConnector.Login(UserName, Password);
             //Si c'est un succes on recupére le token et on essaye de récupérer le role
@@ -84,13 +97,21 @@ namespace dreamteam_mvc.Controllers
                 if (response2.Result.IsSuccessStatusCode)
                 {
                     HttpContext.Session.SetString("role", response2.Result.Content.ReadAsStringAsync().Result);
+                    ViewBag.Message = "Connection Succes";
+                    TempData["Message"] = "Connection Succes";
                 }
+                else
+                {
+                    ViewBag.Erreur = "Retrieving role fail : " + response2.Result.ReasonPhrase;
+                    TempData["Erreur"] = "Retrieving role fail : " + response2.Result.ReasonPhrase;
+                    return RedirectToAction("Index");
+                }
+                TempData.Save();
                 //Puis on redirige sur la page d'accueil avec un message de succès
-                Index();
-                isConnected();
-                ViewBag.Message = "Connection Succes";
-
-                return View("Index");
+                //Index();
+                //isConnected();
+                //return View("Index");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -98,8 +119,11 @@ namespace dreamteam_mvc.Controllers
                 Console.WriteLine("User not found");
                 isConnected();
                 ViewBag.Erreur = "Login fail : " + response.Result.ReasonPhrase;
+                TempData["Erreur"] = "Login fail : " + response.Result.ReasonPhrase;
+                TempData.Save();
                 //Et on retourne sur la meme page
-                return View("Authentification");
+                //return View("Authentification");
+                return RedirectToAction("Authentification");
             }
         }
 
@@ -217,9 +241,10 @@ namespace dreamteam_mvc.Controllers
                 {
                     ViewBag.Message = "Suppression échouée : " + response.Result.ReasonPhrase;
                 }
-                Index();
+                //Index();
                 isConnected();
-                return View("Index");
+                //return View("Index");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -249,8 +274,24 @@ namespace dreamteam_mvc.Controllers
                 ViewBag.Erreur = "Erreur recuperation map : " + response.Result.ReasonPhrase;
                 return View("Index");
             }
+        }
 
-
+        //
+        public IActionResult SetItem()
+        {
+            //Verification que l'utilisateur est un admin avant de lui afficher la page d'ajout
+            if (HttpContext.Session.GetString("role") == "Admin")
+            {
+                isConnected();
+                return View("SetPersonnage");  //ON DOIT RETOURNER LA BONNE VUE SELON L'ITEM
+            }
+            else
+            {
+                //Sinon message explicatif
+                isConnected();
+                ViewBag.Message = "Seul les admins peuvent ajouter des éléments";
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Weapon(int id)
@@ -273,6 +314,7 @@ namespace dreamteam_mvc.Controllers
             if (!String.IsNullOrWhiteSpace(HttpContext.Session.GetString("token")))
             {
                 ViewBag.Connecte = true;
+                ViewBag.Role = HttpContext.Session.GetString("role");
             }
             else
             {

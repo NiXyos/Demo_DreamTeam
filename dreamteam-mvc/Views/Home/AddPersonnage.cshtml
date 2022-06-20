@@ -1,0 +1,59 @@
+﻿@{
+    var Name = "";
+    var Place = "";
+    var MapUrl = "";
+    var Id = "";
+    var Test = "";
+    if (ViewBag.Modif == true)
+    {
+        ViewData["Title"] = "Modif map";
+        Name = ViewBag.Name;
+        Place = ViewBag.Place;
+        MapUrl = ViewBag.MapUrl;
+        Id = ViewBag.Id;
+    }
+    else
+    {
+        ViewData["Title"] = "Ajout map";
+    }
+
+
+}
+<h1 style="color: white;">@ViewData["Title"]</h1>
+
+@if (ViewBag.Modif == true)
+{
+    Test = "PutMap";
+}
+else
+{
+    Test = "AjoutMap";
+}
+<form asp-controller="Home" asp-action="@Test" method="post">
+    <div>
+        <input type="hidden" asp-for="@Id" />
+        <h3 style="color: white;">Nom de la map :</h3>
+        <input asp-for="@Name" />
+        <h3 style="color: white;">Pays :</h3>
+        <input asp-for="@Place" />
+        <h3 style="color: white;">Url :</h3>
+        <input asp-for="@MapUrl" />
+    </div>
+    @if (ViewBag.Modif == true)
+    {
+        <button type="submit">Modifier</button>
+    }
+    else
+    {
+        <button type="submit">Ajouter</button>
+    }
+</form>
+
+@if (ViewBag.Erreur != null)
+{
+    <script type="text/javascript">
+                    window.onload = function () {
+                        alert("@ViewBag.Erreur")
+                    };
+    </script>
+}

@@ -4,33 +4,36 @@
 	<!--<div class=""><small>“Off your feet!”</small></div>-->
 </div>
 <div class="row justify-content-around text-light">
-	<div class="col-lg-4">
-		<div class="card border border-breach bg-darkest mb-4 shadow-lg">
-			<img src="../../@ViewBag.Map.MapUrl" class="card-img-top" alt=""> <!-- agents/breach_m.png -->
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item bg-darkest">
-					<div class="row">
-						<div class="col-lg-5"><strong> Nom Map </strong></div>
-						<div class="col-lg-7"> @ViewBag.Map.Name </div>
-					</div>
-				</li>
-				<li class="list-group-item bg-darkest border-top border-bottom border-breach">
-					<div class="row">
-						<div class="col-lg-5"><strong> Originaire </strong></div>
-						<div class="col-lg-7"> @ViewBag.Map.Place </div>
-					</div>
-				</li>
-				<!--
-					<li class="list-group-item bg-darkest border-bottom border-breach">
-						<div class="row">
-							<div class="col-lg-5"><strong>Affi </strong></div>
-							<div class="col-lg-7"> Valorant Protocol </div>
-						</div>
-					</li>
-				-->
-			</ul>
-		</div>
-	</div>
+    <div class="col-lg-4">
+        <div class="card border border-breach bg-darkest mb-4 shadow-lg">
+            <img src="../../@ViewBag.Map.MapUrl" class="card-img-top" alt=""> <!-- agents/breach_m.png -->
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-darkest">
+                    <div class="row">
+                        <div class="col-lg-5"><strong> Nom Map </strong></div>
+                        <div class="col-lg-7"> @ViewBag.Map.Name </div>
+                    </div>
+                </li>
+                <li class="list-group-item bg-darkest border-top border-bottom border-breach">
+                    <div class="row">
+                        <div class="col-lg-5"><strong> Originaire </strong></div>
+                        <div class="col-lg-7"> @ViewBag.Map.Place </div>
+                    </div>
+                </li>
+                <!--<li class="list-group-item bg-darkest border-bottom border-breach">
+                <div class="row">
+                    <div class="col-lg-5"><strong>Affi </strong></div>
+                    <div class="col-lg-7"> Valorant Protocol </div>
+                </div>
+            </li>-->
+            </ul>
+        </div>
+        @if (ViewBag.Connecte == true && ViewBag.Role == "Admin")
+        {
+            <a asp-controller="Home" asp-action="ModifMap" asp-route-id="@ViewBag.Map.Id"> Modifier </a>
+            <a asp-controller="Home" asp-action="SuppressionMap" asp-route-id="@ViewBag.Map.Id"> Supprimer </a>
+        }
+    </div>
 </div>
 
 

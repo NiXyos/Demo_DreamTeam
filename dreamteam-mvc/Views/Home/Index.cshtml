@@ -1,64 +1,106 @@
 ﻿<div class="w-50 pt-3 pb-2 mb-5 mx-auto text-center text-light">
-      <h1 class='pb-2 shadow-title'> <span class="text-danger font-weight-bold">VALORANT</span> Fiche Agents et des Maps</h1>
-      <p class="shadow-title">Utilisez ce site Web pour en savoir plus sur les agents et les maps de Valorant.</p>
-  </div>
-  <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" id="btn-classes" class="btn btn-dark shadow">Toutes les Classes</button>
-    <button type="button" id="btn-initiator" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Initiateur"><img width="16px" src="agents/initiator.svg"></button>
-    <button type="button" id="btn-controller" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Contrôleur"><img src="agents/controller.svg"></button>
-    <button type="button" id="btn-sentinel" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Sentinelle"><img src="agents/sentinel.svg"></button>
-    <button type="button" id="btn-duelist" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Duelliste"><img src="agents/duelist.svg"></button>
-  </div>
+    <h1 class='pb-2 shadow-title'> <span class="text-danger font-weight-bold">VALORANT</span> Fiche Agents et des Maps</h1>
+    <p class="shadow-title">Utilisez ce site Web pour en savoir plus sur les agents et les maps de Valorant.</p>
+</div>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" id="btn-classes" class="btn btn-dark shadow" onclick="@ViewBag.Filter = 'All'">Toutes les Classes</button>
+    <button type="button" id="btn-initiator" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Initiateur" onclick="@ViewBag.Filter = 'Initiateur'"><img width="16px" src="agents/initiator.svg"></button>
+    <button type="button" id="btn-controller" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Contrôleur" onclick="@ViewBag.Filter = 'Contrôleur'"><img src="agents/controller.svg"></button>
+    <button type="button" id="btn-sentinel" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Sentinelle" onclick="@ViewBag.Filter = 'Sentinelle'"><img src="agents/sentinel.svg"></button>
+    <button type="button" id="btn-duelist" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Duelliste" onclick="@ViewBag.Filter = 'Duelliste'"><img src="agents/duelist.svg"></button>
+    @if (ViewBag.Connecte == true && ViewBag.Role == "Admin")
+    {
+        ViewBag.Modif = false;
+        TempData["Item"] = "Perso";
+        TempData.Save();
+    <a padding="10,0,0,0" asp-controller="Home" asp-action="SetItem"> Ajouter Personnage </a>
+    }
+</div>
 
-  
-  <div class="container mt-2 pt-3 px-5 ">
+
+<div class="container mt-2 pt-3 px-5 ">
     <div class="row justify-content-around pb-5 px-5">
         @foreach (var personnage in ViewBag.Persos)
-       {
-           <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded initiator">
-                <a asp-controller="Home" asp-action="Personnage" asp-route-id="@personnage.Id"> <img class="" height="200px" src="@personnage.PicUrl" alt="@personnage.Name"> </a>
-           </div>
-       }
-     </div>
-    <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Maps</button>
+        {
+        @switch (personnage.Role)
+            {
+                case "Initiateur":
+        <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded initiator">
+            <a asp-controller="Home" asp-action="Personnage" asp-route-id="@personnage.Id"> <img class="" height="200px" src="@personnage.PicUrl" alt="@personnage.Name"> </a>
+        </div>
+                    break;
+                case "Contrôleur":
+        <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded controller">
+            <a asp-controller="Home" asp-action="Personnage" asp-route-id="@personnage.Id"> <img class="" height="200px" src="@personnage.PicUrl" alt="@personnage.Name"> </a>
+        </div>
+                    break;
+                case "Sentinelle":
+        <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded sentinel">
+            <a asp-controller="Home" asp-action="Personnage" asp-route-id="@personnage.Id"> <img class="" height="200px" src="@personnage.PicUrl" alt="@personnage.Name"> </a>
+        </div>
+                    break;
+                case "Duelliste":
+        <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded duelist">
+            <a asp-controller="Home" asp-action="Personnage" asp-route-id="@personnage.Id"> <img class="" height="200px" src="@personnage.PicUrl" alt="@personnage.Name"> </a>
+        </div>
+                    break;
+                default:
+                    break;
+            }
+        }
     </div>
-  </div>
-  <div class="container mt-2 pt-3 px-5 ">
-      <div class="row justify-content-around pb-5 px-5">
-          @foreach (var map in ViewBag.Maps)
-          {
-          <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded initiator">
-              <a asp-controller="Home" asp-action="Map" asp-route-id="@map.Id"> <img class="" width="150px" height="100px" src="@map.MapUrl" alt="@map.Name"> </a>
-              <a asp-controller="Home" asp-action="ModifMap" asp-route-id="@map.Id"> Modifier </a>
-              <a asp-controller="Home" asp-action="SuppressionMap" asp-route-id="@map.Id"> Supprimer </a>
-          </div>
-          }
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Maps</button>
+        @if (ViewBag.Connecte == true && ViewBag.Role == "Admin")
+        {
+        <a asp-controller="Home" asp-action="AddMap"> Ajouter map </a>
+        }
+    </div>
+</div>
+<div class="container mt-2 pt-3 px-5 ">
+    <div class="row justify-content-around pb-5 px-5">
+        @foreach (var map in ViewBag.Maps)
+        {
+        <div class="col-xl-2 mb-3 text-center border-bottom border-3 shadow-lg char-zoom rounded">
+            <a asp-controller="Home" asp-action="Map" asp-route-id="@map.Id"> <img class="" width="150px" height="100px" src="@map.MapUrl" alt="@map.Name"> </a>
+        </div>
+        }
+    </div>
+</div>
 
-      </div>
-      <a asp-controller="Home" asp-action="AddMap"> Ajouter map </a>
-  </div>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Armes</button>
+    @if (ViewBag.Connecte == true && ViewBag.Role == "Admin")
+    {
+    <a asp-controller="Home" asp-action="SetItem"> Nouvelle Arme </a>
+    }
+</div>
 
-      <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" id="btn-map" class="btn btn-dark shadow">Toutes les Armes</button>
-      </div>
-  
-    <div class="container mt-2 pt-3 px-5 ">
-     <div class="row justify-content-around pb-5 px-5">
+<div class="container mt-2 pt-3 px-5 ">
+    <div class="row justify-content-around pb-5 px-5">
         @foreach (var weapon in ViewBag.Weapons)
-       {
-           <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded initiator">
-                <a asp-controller="Home" asp-action="Weapon" asp-route-id="@weapon.Id"> <img class="" width="150px" height="100px" src="@weapon.WeaponUrl" alt="@weapon.Name"> </a>
-           </div>
-       }
-     </div>
-  </div>
+        {
+        <div class="col-xl-2 mb-3 text-center border-bottom border-breach border-3 shadow-lg char-zoom rounded">
+            <a asp-controller="Home" asp-action="Weapon" asp-route-id="@weapon.Id"> <img class="" width="150px" height="100px" src="@weapon.WeaponUrl" alt="@weapon.Name"> </a>
+        </div>
+        }
+    </div>
+</div>
 
 @if (ViewBag.Message != null)
-            {
-                <script type="text/javascript">
-                    window.onload = function () {
-                        alert("@ViewBag.Message")
-                    };
-                </script>
-            }
+{
+<script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Message")
+        };
+</script>
+}
+
+@if (ViewBag.Erreur != null)
+{
+<script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Erreur")
+        };
+</script>
+}

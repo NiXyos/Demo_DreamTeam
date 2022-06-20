@@ -12,7 +12,8 @@ namespace dreamteam_mvc
 {
     public static class ApiConnector
     {
-        private static string urlApi = "https://apivalorant.azurewebsites.net";
+        //private static string urlApi = "https://apivalorant.azurewebsites.net";
+        private static string urlApi = "https://localhost:44348";
         public static async Task<string> GetPersonnage()
         {
             HttpClient client = new HttpClient();
@@ -32,6 +33,17 @@ namespace dreamteam_mvc
 
             throw new Exception("Aucune donnée n'a été retrouvé !!!");
         }
+
+        public static async Task<HttpResponseMessage> GetAPersonnage(int Id)
+        {
+            //Lancement de la requete permettant de récupérer les informations d'une map
+            HttpClient client = new HttpClient();
+            string url = @$"{urlApi}/api/characters/" + Id;
+            var response = await client.GetAsync(url);
+            //Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+            return response;
+        }
+
         public static async Task<string> GetWeapon()
         {
             HttpClient client = new HttpClient();

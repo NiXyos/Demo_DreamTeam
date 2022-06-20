@@ -1,0 +1,76 @@
+﻿@{
+    var Item = ViewBag.Item;
+    if (TempData.ContainsKey("Item"))
+    {
+        Item = TempData["Item"];
+    }
+    var BtnTxt = "";
+    Dictionary<string, string> fields = new Dictionary<string, string>();
+
+    var Name = "";
+    var Origin = "";
+    var Role = "";
+    var Desc = "";
+    var ImageUrl = "";
+    var Id = "";
+    var Test = "";
+    if (ViewBag.Modif == true)
+    {
+        ViewData["Title"] = "Modification de Personnage";
+        Test = "Put" + ViewBag.Item;
+        BtnTxt = "Modifier";
+
+        Id = ViewBag.Id;
+    }
+    else
+    {
+        ViewData["Title"] = "Nouveau Personnage";
+        Test = "Create" + ViewBag.Item;
+        BtnTxt = "Ajouter";
+    }
+
+    switch (TempData["Item"])
+    {
+        case "Perso":
+            fields.Add("Nom", ViewBag.Modif ? ViewBag.Name : "");
+            fields.Add("Role", ViewBag.Modif ? ViewBag.Role : "");
+            fields.Add("Origine", ViewBag.Modif ? ViewBag.Country : "");
+            fields.Add("Description", ViewBag.Modif ? ViewBag.Description : "");
+            fields.Add("Image", ViewBag.Modif ? ViewBag.PicUrl : "");
+
+            //CREATION ULTI + COMPETENCES
+            break;
+        case "Map":
+            fields.Add("Nom", ViewBag.Modif ? ViewBag.Name : "");
+            fields.Add("Pays", ViewBag.Modif ? ViewBag.Place : "");
+            fields.Add("Image", ViewBag.Modif ? ViewBag.MapUrl : "");
+            break;
+        case "Weapon":
+
+            break;
+        default:
+            break;
+    }
+}
+<h1 style="color: white;">@ViewData["Title"]</h1>
+<form asp-controller="Home" asp-action="@Test" method="post">
+    <div>
+        <input type="hidden" asp-for="@Id" />
+        @foreach (KeyValuePair<string, string> item in fields)
+        {
+            <h3 style="color: white;">@item.Key :</h3>
+            <input asp-for="@item.Value" />
+        }
+    </div>
+
+    <button type="submit">@BtnTxt</button>
+</form>
+
+@if (ViewBag.Erreur != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Erreur")
+        };
+    </script>
+}
