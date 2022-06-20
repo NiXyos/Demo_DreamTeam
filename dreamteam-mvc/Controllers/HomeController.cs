@@ -55,7 +55,7 @@ namespace dreamteam_mvc.Controllers
                 return View("Index");
             }
         }
-        public IActionResult AjoutPersonnage(string Name, string Country, string Desc, string IconUrl)
+        public IActionResult AjoutPerso(string Name, string Country, string Desc, string Role, string IconUrl)
         {
             //Appel de la méthode lançant la requete http de création de map en lui passant le token pour vérification des droits
             var response = ApiConnector.PostPersonnage(Name, Country, Desc, IconUrl, HttpContext.Session.GetString("token"));

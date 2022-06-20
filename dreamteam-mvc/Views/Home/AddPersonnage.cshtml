@@ -2,6 +2,7 @@
     var Name = "";
     var Origin = "";
     var Desc = "";
+    var Role = "";
     var IconUrl = "";
     var Id = "";
     var Test = "";
@@ -10,6 +11,7 @@
         ViewData["Title"] = "Modif Personnage";
         Name = ViewBag.Name;
         Origin = ViewBag.Country;
+        Role = ViewBag.Role;
         Desc = ViewBag.Description;
         IconUrl = ViewBag.IconUrl;
         Id = ViewBag.Id;
@@ -38,6 +40,10 @@ else
         <input asp-for="@Origin" />
         <h3 style="color: white;">Description :</h3>
         <input asp-for="@Desc" />
+        <h3 style="color: white;">Role :</h3>
+        <input asp-for="@Role" />
+        <h3 style="color: white;">Image Url :</h3>
+        <input asp-for="@IconUrl" />
     </div>
     @if (ViewBag.Modif == true)
     {

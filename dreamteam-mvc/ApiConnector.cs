@@ -144,7 +144,7 @@ namespace dreamteam_mvc
         }
 
         //-------------- PERSO ------------
-        public static async Task<HttpResponseMessage> PostPersonnage(string Name, string Country, string Description, string IconUrl, string token)
+        public static async Task<HttpResponseMessage> PostPersonnage(string Name, string Country, string Description, string Role, string IconUrl, string token)
         {
             //Lancement de la requete permettant l'ajout d'une map
             HttpClient client = new HttpClient();
@@ -152,7 +152,9 @@ namespace dreamteam_mvc
             {
                 { "name", Name },
                 { "country", Country },
+                { "role", Role },
                 { "description", Description },
+                { "ultId", "0" },
                 { "iconUrl", IconUrl }
             };
             string url = @$"{urlApi}/api/weapons";
