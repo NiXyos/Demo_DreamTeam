@@ -58,7 +58,7 @@ namespace dreamteam_mvc.Controllers
         public IActionResult AjoutPerso(string Name, string Country, string Desc, string Role, string IconUrl)
         {
             //Appel de la méthode lançant la requete http de création de map en lui passant le token pour vérification des droits
-            var response = ApiConnector.PostPersonnage(Name, Country, Desc, IconUrl, HttpContext.Session.GetString("token"));
+            var response = ApiConnector.PostPersonnage(Name, Country, Desc, Role, IconUrl, HttpContext.Session.GetString("token"));
             //Si création réussi on retourne sur la page d'index avec un message de succès
             if (response.Result.IsSuccessStatusCode)
             {
