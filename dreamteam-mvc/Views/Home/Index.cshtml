@@ -10,10 +10,11 @@
     <button type="button" id="btn-duelist" class="btn btn-dark shadow" data-toggle="tooltip" data-placement="top" title="Duelliste" onclick="@ViewBag.Filter = 'Duelliste'"><img src="agents/duelist.svg"></button>
     @if (ViewBag.Connecte == true && ViewBag.Role == "Admin")
     {
-        ViewBag.Modif = false;
-        TempData["Item"] = "Perso";
-        TempData.Save();
-    <a padding="10,0,0,0" asp-controller="Home" asp-action="SetItem"> Ajouter Personnage </a>
+        //ViewBag.Modif = false;
+        //TempData["Item"] = "Perso";
+        //TempData.Save();
+        <a padding="00,0,0,10" margin="0,0,0,10" asp-controller="Home" asp-action="AddPersonnage"> Ajouter Personnage </a>
+        <!--<a padding="10,0,0,0" asp-controller="Home" asp-action="SetItem"> Ajouter Personnage </a>-->
     }
 </div>
 
